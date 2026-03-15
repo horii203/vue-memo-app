@@ -1,39 +1,28 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import HeaderBar from "./components/HeaderBar.vue";
+import ProfileForm from "./components/ProfileForm.vue";
+import MemoList from "./components/MemoList.vue";
 
-// とりあえず名前と趣味だけ
-const name = ref("");
-const hobby = ref("");
+type Memo = {
+  name: string;
+  job: string;
+  hobby: string;
+};
 
-const people = ref<{ name: string; hobby: string }[]>([]);
+const memos = ref<Memo[]>([]);
 
-const addPerson = () => {
-  if (!name.value || !hobby.value) return;
-
-  people.value.push({
-    name: name.value,
-    hobby: hobby.value,
-  });
-
-  name.value = "";
-  hobby.value = "";
+const addMemo = (memo: Memo) => {
+  memos.value.push(memo);
 };
 </script>
 
 <template>
-  <h1>メモアプリ</h1>
-
-  <!-- 入力フィールド -->
-  <div>
-    <input v-model="name" placeholder="名前" />
-    <input v-model="hobby" placeholder="趣味" />
-    <button @click="addPerson">追加</button>
+  <div class="min-h-screen bg-gray-100 p-6">
+    <div class="max-w-5xl mx-auto space-y-8">
+      <HeaderBar />
+      <ProfileForm @addMemo="addMemo" />
+      <MemoList :memos="memos" />
+    </div>
   </div>
-
-  <ul>
-    <!-- 配列をループ表示 -->
-    <li v-for="person in people" :key="person.name">
-      {{ person.name }}
-    </li>
-  </ul>
 </template>

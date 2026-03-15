@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// 親 (MemoList) から name・job・hobby の3つを props として受け取る
 defineProps<{
   name: string;
   job: string;

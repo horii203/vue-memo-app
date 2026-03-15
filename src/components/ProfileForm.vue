@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
+// name・job・hobby の3つをリアクティブな状態として管理
 const name = ref("");
 const job = ref("");
 const hobby = ref("");
 
+//　addMemo イベントを親 (App.vue) に向けて発火するための emit 関数を定義
 const emit = defineEmits(["addMemo"]);
 
+// addMemo イベントを発火して、name・job・hobby の値を親に渡す
 const submit = () => {
   emit("addMemo", {
     name: name.value,
@@ -14,6 +17,7 @@ const submit = () => {
     hobby: hobby.value,
   });
 
+  // フォームをリセットするために、name・job・hobby の値を空にする
   name.value = "";
   job.value = "";
   hobby.value = "";

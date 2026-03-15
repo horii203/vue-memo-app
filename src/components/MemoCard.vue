@@ -1,9 +1,10 @@
 <script setup lang="ts">
-// 親 (MemoList) から name・job・hobby の3つを props として受け取る
+// 親 (MemoList) から name・job・hobby・other の4つを props として受け取る
 defineProps<{
   name: string;
   job: string;
   hobby: string;
+  other: string;
 }>();
 </script>
 
@@ -24,5 +25,6 @@ defineProps<{
 
     <p>職業：{{ job }}</p>
     <p>趣味：{{ hobby }}</p>
+    <p class="whitespace-pre-wrap">その他：{{ other }}</p>
   </div>
 </template>

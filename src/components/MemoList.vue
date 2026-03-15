@@ -7,6 +7,7 @@ defineProps<{
     name: string;
     job: string;
     hobby: string;
+    other: string;
   }[];
 }>();
 </script>
@@ -20,6 +21,7 @@ defineProps<{
       :name="memo.name"
       :job="memo.job"
       :hobby="memo.hobby"
+      :other="memo.other"
     />
   </div>
 </template>

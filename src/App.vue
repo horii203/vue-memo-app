@@ -4,11 +4,12 @@ import HeaderBar from "./components/HeaderBar.vue";
 import ProfileForm from "./components/ProfileForm.vue";
 import MemoList from "./components/MemoList.vue";
 
-// メモの型定義。name・job・hobby の3フィールドを持つ
+// メモの型定義。name・job・hobby・other の4フィールドを持つ
 type Memo = {
   name: string;
   job: string;
   hobby: string;
+  other: string;
 };
 
 // メモの配列をリアクティブな状態として管理

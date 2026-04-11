@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { Authenticator } from "@aws-amplify/ui-vue";
+import "@aws-amplify/ui-vue/styles.css";
 import HeaderBar from "./components/HeaderBar.vue";
 import ProfileForm from "./components/ProfileForm.vue";
 import MemoList from "./components/MemoList.vue";
@@ -22,11 +24,18 @@ const addMemo = (memo: Memo) => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-100 p-6">
-    <div class="max-w-5xl mx-auto space-y-8">
-      <HeaderBar />
-      <ProfileForm @addMemo="addMemo" />
-      <MemoList :memos="memos" />
-    </div>
-  </div>
+  <Authenticator>
+    <template #default="{ user, signOut }">
+      <div class="min-h-screen bg-gray-100 p-6">
+        <div class="max-w-5xl mx-auto space-y-8">
+          <HeaderBar
+            :user-name="user?.signInDetails?.loginId ?? ''"
+            :sign-out="signOut"
+          />
+          <ProfileForm @addMemo="addMemo" />
+          <MemoList :memos="memos" />
+        </div>
+      </div>
+    </template>
+  </Authenticator>
 </template>

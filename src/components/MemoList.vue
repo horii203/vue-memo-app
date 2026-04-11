@@ -1,27 +1,25 @@
 <script setup lang="ts">
 import MemoCard from "./MemoCard.vue";
+import type { Memo } from "../composables/useMemos";
 
-// 親 (App.vue) から memos の配列を props として受け取る
 defineProps<{
-  memos: {
-    name: string;
-    job: string;
-    hobby: string;
-    other: string;
-  }[];
+  memos: Memo[];
+}>();
+
+defineEmits<{
+  deleteMemo: [id: string];
+  updateMemo: [payload: { id: string; input: { name: string; job: string; hobby: string; other: string } }];
 }>();
 </script>
 
-<!--  MemoCard コンポーネントをインポートして、v-for ディレクティブで memos 配列をループして表示する -->
 <template>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <MemoCard
-      v-for="(memo, index) in memos"
-      :key="index"
-      :name="memo.name"
-      :job="memo.job"
-      :hobby="memo.hobby"
-      :other="memo.other"
+      v-for="memo in memos"
+      :key="memo.id"
+      v-bind="memo"
+      @delete-memo="$emit('deleteMemo', $event)"
+      @update-memo="$emit('updateMemo', $event)"
     />
   </div>
 </template>

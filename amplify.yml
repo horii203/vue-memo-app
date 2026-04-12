@@ -1,15 +1,11 @@
 version: 1
-backend:
-  phases:
-    build:
-      commands:
-        - npm install --legacy-peer-deps
-        - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
 frontend:
   phases:
     preBuild:
       commands:
-        - npm install --legacy-peer-deps
+        - nvm install 20
+        - nvm use 20
+        - npm ci
     build:
       commands:
         - npm run build

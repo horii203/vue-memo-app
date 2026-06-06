@@ -1,16 +1,13 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-// name・job・hobby・other の4つをリアクティブな状態として管理
 const name = ref("");
 const job = ref("");
 const hobby = ref("");
 const other = ref("");
 
-//　addMemo イベントを親 (App.vue) に向けて発火するための emit 関数を定義
-const emit = defineEmits(["addMemo"]);
+const emit = defineEmits(["addMemo", "close"]);
 
-// addMemo イベントを発火して、name・job・hobby・other の値を親に渡す
 const submit = () => {
   emit("addMemo", {
     name: name.value,
@@ -19,17 +16,25 @@ const submit = () => {
     other: other.value,
   });
 
-  // フォームをリセットするために、name・job・hobby・other の値を空にする
   name.value = "";
   job.value = "";
   hobby.value = "";
   other.value = "";
+  emit("close");
 };
 </script>
 
 <template>
   <div class="bg-white p-6 rounded-xl shadow max-w-md w-full mx-auto space-y-4">
-    <h2 class="text-xl font-bold">プロフィール登録</h2>
+    <div class="flex justify-between items-center">
+      <h2 class="text-xl font-bold">プロフィール登録</h2>
+      <button
+        @click="$emit('close')"
+        class="text-gray-400 hover:text-gray-600 text-2xl leading-none"
+      >
+        &times;
+      </button>
+    </div>
 
     <input
       v-model="name"

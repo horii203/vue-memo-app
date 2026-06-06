@@ -11,22 +11,30 @@ const settingsId = ref<string | null>(null);
 let initialized = false;
 
 const fetchSettings = async () => {
-  const { data } = await client.models.UserSettings.list();
-  if (data.length > 0) {
-    settingsId.value = data[0].id;
-    if (data[0].jobOptions) {
-      jobOptions.value = JSON.parse(data[0].jobOptions as string);
+  try {
+    const { data } = await client.models.UserSettings.list();
+    if (data.length > 0) {
+      settingsId.value = data[0].id;
+      if (data[0].jobOptions) {
+        jobOptions.value = JSON.parse(data[0].jobOptions as string);
+      }
     }
+  } catch {
+    // 取得失敗時はデフォルト値を使用
   }
 };
 
 const persist = async () => {
-  const payload = JSON.stringify(jobOptions.value);
-  if (settingsId.value) {
-    await client.models.UserSettings.update({ id: settingsId.value, jobOptions: payload });
-  } else {
-    const { data } = await client.models.UserSettings.create({ jobOptions: payload });
-    if (data) settingsId.value = data.id;
+  try {
+    const payload = JSON.stringify(jobOptions.value);
+    if (settingsId.value) {
+      await client.models.UserSettings.update({ id: settingsId.value, jobOptions: payload });
+    } else {
+      const { data } = await client.models.UserSettings.create({ jobOptions: payload });
+      if (data) settingsId.value = data.id;
+    }
+  } catch {
+    // 保存失敗時はスキップ
   }
 };
 

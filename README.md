@@ -81,7 +81,7 @@ npm run preview
 
 ## デプロイ
 
-**本番 URL:** https://main.d2a8to79lcf5pq.amplifyapp.com/
+**本番 URL:** https://main.drgukncoyom3j.amplifyapp.com/
 
 AWS Amplify Hosting を使用した Git ベースの CI/CD によって自動デプロイされます。
 `main` ブランチへのプッシュで `amplify.yml` の設定に従いビルド・デプロイが実行されます。
@@ -90,10 +90,15 @@ AWS Amplify Hosting を使用した Git ベースの CI/CD によって自動デ
 
 ```
 Memo {
-  name:  String  (必須) - 名前
-  job:   String  (必須) - 職業
-  hobby: String  (必須) - 趣味
-  other: String  (任意) - その他
+  name:     String  (必須) - 名前
+  job:      String  (必須) - 職業
+  hobby:    String  (必須) - 趣味
+  xAccount: String  (任意) - X アカウント
+  other:    String  (任意) - その他
+}
+
+UserSettings {
+  jobOptions: JSON  (任意) - 職業選択肢のカスタム設定
 }
 ```
 

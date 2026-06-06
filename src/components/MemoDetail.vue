@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import type { Memo } from "../composables/useMemos";
-import { jobOptions } from "../constants/jobOptions";
+import { useJobOptions } from "../composables/useJobOptions";
+
+const { jobOptions } = useJobOptions();
 
 const props = defineProps<{ memo: Memo }>();
 const emit = defineEmits<{

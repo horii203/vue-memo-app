@@ -6,6 +6,8 @@ defineProps<{
   signOut: () => void;
 }>();
 
+defineEmits(["settings"]);
+
 const menuOpen = ref(false);
 </script>
 
@@ -56,6 +58,12 @@ const menuOpen = ref(false);
       </div>
 
       <nav class="flex-1 py-2">
+        <button
+          @click="() => { menuOpen = false; $emit('settings'); }"
+          class="w-full text-left px-5 py-3 text-sm hover:bg-blue-50 text-gray-700 transition"
+        >
+          設定
+        </button>
         <button
           @click="() => { menuOpen = false; signOut(); }"
           class="w-full text-left px-5 py-3 text-sm hover:bg-blue-50 text-gray-700 transition"

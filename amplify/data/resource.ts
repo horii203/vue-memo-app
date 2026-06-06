@@ -9,6 +9,11 @@ const schema = a.schema({
       other: a.string(),
     })
     .authorization((allow) => [allow.owner()]),
+  UserSettings: a
+    .model({
+      jobOptions: a.json(),
+    })
+    .authorization((allow) => [allow.owner()]),
 });
 
 export type Schema = ClientSchema<typeof schema>;

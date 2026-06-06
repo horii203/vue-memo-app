@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { jobOptions } from "../constants/jobOptions";
+import { useJobOptions } from "../composables/useJobOptions";
+
+const { jobOptions } = useJobOptions();
 
 const name = ref("");
 const job = ref("");

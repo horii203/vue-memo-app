@@ -6,11 +6,13 @@ import HeaderBar from "./components/HeaderBar.vue";
 import ProfileForm from "./components/ProfileForm.vue";
 import MemoList from "./components/MemoList.vue";
 import MemoDetail from "./components/MemoDetail.vue";
+import JobOptionsEditor from "./components/JobOptionsEditor.vue";
 import { useMemos } from "./composables/useMemos";
 
 const { memos, isLoading, addMemo, deleteMemo, updateMemo } = useMemos();
 
 const showForm = ref(false);
+const showSettings = ref(false);
 const selectedMemoId = ref<string | null>(null);
 const selectedMemo = computed(() => memos.value.find((m) => m.id === selectedMemoId.value) ?? null);
 
@@ -27,6 +29,7 @@ const handleDeleteMemo = async (id: string) => {
         <HeaderBar
           :user-name="user?.signInDetails?.loginId ?? ''"
           :sign-out="signOut"
+          @settings="showSettings = true"
         />
 
         <div class="max-w-5xl mx-auto px-6 py-8 space-y-8">
@@ -64,7 +67,16 @@ const handleDeleteMemo = async (id: string) => {
           </svg>
         </button>
 
-        <!-- モーダルオーバーレイ -->
+        <!-- 設定モーダル -->
+        <div
+          v-if="showSettings"
+          class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4"
+          @click.self="showSettings = false"
+        >
+          <JobOptionsEditor @close="showSettings = false" />
+        </div>
+
+        <!-- 登録モーダル -->
         <div
           v-if="showForm"
           class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4"

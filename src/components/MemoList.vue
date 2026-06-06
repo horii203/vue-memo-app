@@ -7,7 +7,7 @@ defineEmits<{ selectMemo: [id: string] }>();
 </script>
 
 <template>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+  <div class="grid grid-cols-1 gap-4">
     <MemoCard
       v-for="memo in memos"
       :key="memo.id"

@@ -2,24 +2,18 @@
 import MemoCard from "./MemoCard.vue";
 import type { Memo } from "../composables/useMemos";
 
-defineProps<{
-  memos: Memo[];
-}>();
-
-defineEmits<{
-  deleteMemo: [id: string];
-  updateMemo: [payload: { id: string; input: { name: string; job: string; hobby: string; other: string } }];
-}>();
+defineProps<{ memos: Memo[] }>();
+defineEmits<{ selectMemo: [id: string] }>();
 </script>
 
 <template>
-  <div class="grid grid-cols-1 gap-6">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <MemoCard
       v-for="memo in memos"
       :key="memo.id"
-      v-bind="memo"
-      @delete-memo="$emit('deleteMemo', $event)"
-      @update-memo="$emit('updateMemo', $event)"
+      :id="memo.id"
+      :name="memo.name"
+      @select-memo="$emit('selectMemo', $event)"
     />
   </div>
 </template>

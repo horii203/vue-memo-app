@@ -1,15 +1,23 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { Authenticator } from "@aws-amplify/ui-vue";
 import "@aws-amplify/ui-vue/styles.css";
 import HeaderBar from "./components/HeaderBar.vue";
 import ProfileForm from "./components/ProfileForm.vue";
 import MemoList from "./components/MemoList.vue";
+import MemoDetail from "./components/MemoDetail.vue";
 import { useMemos } from "./composables/useMemos";
 
 const { memos, isLoading, addMemo, deleteMemo, updateMemo } = useMemos();
 
 const showForm = ref(false);
+const selectedMemoId = ref<string | null>(null);
+const selectedMemo = computed(() => memos.value.find((m) => m.id === selectedMemoId.value) ?? null);
+
+const handleDeleteMemo = async (id: string) => {
+  await deleteMemo(id);
+  selectedMemoId.value = null;
+};
 </script>
 
 <template>
@@ -18,22 +26,36 @@ const showForm = ref(false);
       <div class="min-h-screen bg-gray-100 p-6">
         <div class="max-w-5xl mx-auto space-y-8">
           <HeaderBar
+            v-if="!selectedMemo"
             :user-name="user?.signInDetails?.loginId ?? ''"
             :sign-out="signOut"
           />
-          <div v-if="isLoading" class="text-center text-gray-500">
-            読み込み中...
-          </div>
-          <MemoList
-            v-else
-            :memos="memos"
-            @delete-memo="deleteMemo"
+
+          <!-- 詳細ページ -->
+          <MemoDetail
+            v-if="selectedMemo"
+            :memo="selectedMemo"
+            @back="selectedMemoId = null"
+            @delete-memo="handleDeleteMemo"
             @update-memo="({ id, input }) => updateMemo(id, input)"
           />
+
+          <!-- 一覧ページ -->
+          <template v-else>
+            <div v-if="isLoading" class="text-center text-gray-500">
+              読み込み中...
+            </div>
+            <MemoList
+              v-else
+              :memos="memos"
+              @select-memo="selectedMemoId = $event"
+            />
+          </template>
         </div>
 
-        <!-- FAB -->
+        <!-- FAB（一覧ページのみ表示） -->
         <button
+          v-if="!selectedMemo"
           @click="showForm = true"
           class="fixed bottom-6 right-6 w-14 h-14 bg-gray-800 hover:bg-gray-700 text-white rounded-full shadow-lg flex items-center justify-center transition"
         >

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import type { Memo } from "../composables/useMemos";
+import { jobOptions } from "../constants/jobOptions";
 
 const props = defineProps<{ memo: Memo }>();
 const emit = defineEmits<{
@@ -12,13 +13,11 @@ const emit = defineEmits<{
 const isEditing = ref(false);
 const editName = ref(props.memo.name);
 const editJob = ref(props.memo.job);
-const editHobby = ref(props.memo.hobby);
 const editOther = ref(props.memo.other ?? "");
 
 watch(() => props.memo, (m) => {
   editName.value = m.name;
   editJob.value = m.job;
-  editHobby.value = m.hobby;
   editOther.value = m.other ?? "";
 });
 
@@ -28,7 +27,7 @@ const handleUpdate = () => {
     input: {
       name: editName.value,
       job: editJob.value,
-      hobby: editHobby.value,
+      hobby: "",
       other: editOther.value,
     },
   });
@@ -38,7 +37,6 @@ const handleUpdate = () => {
 const handleCancel = () => {
   editName.value = props.memo.name;
   editJob.value = props.memo.job;
-  editHobby.value = props.memo.hobby;
   editOther.value = props.memo.other ?? "";
   isEditing.value = false;
 };
@@ -46,7 +44,6 @@ const handleCancel = () => {
 
 <template>
   <div class="space-y-6">
-    <!-- 戻るボタン -->
     <button
       @click="$emit('back')"
       class="flex items-center gap-1 text-blue-400 hover:text-blue-600 transition"
@@ -58,17 +55,12 @@ const handleCancel = () => {
     </button>
 
     <div v-if="!isEditing" class="space-y-6">
-      <!-- 名前をタイトルとして大きく表示 -->
       <h1 class="text-3xl font-bold">{{ memo.name }}</h1>
 
       <div class="space-y-4">
         <div>
           <p class="text-xs text-blue-400 mb-1">職業</p>
           <p class="text-base">{{ memo.job }}</p>
-        </div>
-        <div>
-          <p class="text-xs text-blue-400 mb-1">趣味</p>
-          <p class="text-base">{{ memo.hobby }}</p>
         </div>
         <div v-if="memo.other">
           <p class="text-xs text-blue-400 mb-1">その他</p>
@@ -92,11 +84,31 @@ const handleCancel = () => {
       </div>
     </div>
 
-    <div v-else class="space-y-3">
+    <div v-else class="space-y-4">
       <input v-model="editName" class="border rounded-lg p-2 w-full" placeholder="名前" />
-      <input v-model="editJob" class="border rounded-lg p-2 w-full" placeholder="職業" />
-      <input v-model="editHobby" class="border rounded-lg p-2 w-full" placeholder="趣味" />
+
+      <div class="space-y-1">
+        <p class="text-xs text-gray-400">職業</p>
+        <div class="flex flex-wrap gap-2">
+          <button
+            v-for="option in jobOptions"
+            :key="option"
+            type="button"
+            @click="editJob = option"
+            :class="[
+              'px-3 py-1.5 rounded-full text-sm border transition',
+              editJob === option
+                ? 'bg-blue-600 text-white border-blue-600'
+                : 'bg-white text-gray-600 border-gray-200 hover:border-blue-400 hover:text-blue-600'
+            ]"
+          >
+            {{ option }}
+          </button>
+        </div>
+      </div>
+
       <textarea v-model="editOther" class="border rounded-lg p-2 w-full" placeholder="その他" rows="3" />
+
       <div class="flex gap-2">
         <button
           class="flex-1 bg-blue-600 hover:bg-blue-500 text-white p-2 rounded-lg transition"

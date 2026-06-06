@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { jobOptions } from "../constants/jobOptions";
 
 const name = ref("");
 const job = ref("");
-const hobby = ref("");
 const other = ref("");
 
 const emit = defineEmits(["addMemo", "close"]);
@@ -12,13 +12,12 @@ const submit = () => {
   emit("addMemo", {
     name: name.value,
     job: job.value,
-    hobby: hobby.value,
+    hobby: "",
     other: other.value,
   });
 
   name.value = "";
   job.value = "";
-  hobby.value = "";
   other.value = "";
   emit("close");
 };
@@ -42,17 +41,25 @@ const submit = () => {
       placeholder="名前"
     />
 
-    <input
-      v-model="job"
-      class="border rounded-lg p-2 w-full"
-      placeholder="職業"
-    />
-
-    <input
-      v-model="hobby"
-      class="border rounded-lg p-2 w-full"
-      placeholder="趣味"
-    />
+    <div class="space-y-1">
+      <p class="text-xs text-gray-400">職業</p>
+      <div class="flex flex-wrap gap-2">
+        <button
+          v-for="option in jobOptions"
+          :key="option"
+          type="button"
+          @click="job = option"
+          :class="[
+            'px-3 py-1.5 rounded-full text-sm border transition',
+            job === option
+              ? 'bg-blue-600 text-white border-blue-600'
+              : 'bg-white text-gray-600 border-gray-200 hover:border-blue-400 hover:text-blue-600'
+          ]"
+        >
+          {{ option }}
+        </button>
+      </div>
+    </div>
 
     <textarea
       v-model="other"

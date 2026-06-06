@@ -9,17 +9,19 @@ const props = defineProps<{ memo: Memo }>();
 const emit = defineEmits<{
   back: [];
   deleteMemo: [id: string];
-  updateMemo: [payload: { id: string; input: { name: string; job: string; hobby: string; other: string } }];
+  updateMemo: [payload: { id: string; input: { name: string; job: string; hobby: string; xAccount: string; other: string } }];
 }>();
 
 const isEditing = ref(false);
 const editName = ref(props.memo.name);
 const editJob = ref(props.memo.job);
+const editXAccount = ref(props.memo.xAccount ?? "");
 const editOther = ref(props.memo.other ?? "");
 
 watch(() => props.memo, (m) => {
   editName.value = m.name;
   editJob.value = m.job;
+  editXAccount.value = m.xAccount ?? "";
   editOther.value = m.other ?? "";
 });
 
@@ -30,6 +32,7 @@ const handleUpdate = () => {
       name: editName.value,
       job: editJob.value,
       hobby: "",
+      xAccount: editXAccount.value,
       other: editOther.value,
     },
   });
@@ -39,6 +42,7 @@ const handleUpdate = () => {
 const handleCancel = () => {
   editName.value = props.memo.name;
   editJob.value = props.memo.job;
+  editXAccount.value = props.memo.xAccount ?? "";
   editOther.value = props.memo.other ?? "";
   isEditing.value = false;
 };
@@ -63,6 +67,15 @@ const handleCancel = () => {
         <div>
           <p class="text-xs text-blue-400 mb-1">職業</p>
           <p class="text-base">{{ memo.job }}</p>
+        </div>
+        <div v-if="memo.xAccount">
+          <p class="text-xs text-blue-400 mb-1">X アカウント</p>
+          <a
+            :href="`https://x.com/${memo.xAccount}`"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-blue-600 hover:underline"
+          >@{{ memo.xAccount }}</a>
         </div>
         <div v-if="memo.other">
           <p class="text-xs text-blue-400 mb-1">その他</p>
@@ -107,6 +120,15 @@ const handleCancel = () => {
             {{ option }}
           </button>
         </div>
+      </div>
+
+      <div class="flex items-center border rounded-lg overflow-hidden">
+        <span class="px-3 py-2 bg-gray-50 text-gray-400 text-sm border-r select-none">@</span>
+        <input
+          v-model="editXAccount"
+          class="p-2 flex-1 outline-none text-sm"
+          placeholder="X アカウント"
+        />
       </div>
 
       <textarea v-model="editOther" class="border rounded-lg p-2 w-full" placeholder="その他" rows="3" />

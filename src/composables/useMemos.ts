@@ -34,7 +34,7 @@ export function useMemos() {
 
   const updateMemo = async (
     id: string,
-    input: { name: string; job: string; hobby: string; other: string }
+    input: { name: string; job: string; hobby: string; xAccount: string; other: string }
   ) => {
     const { data: updated } = await client.models.Memo.update({ id, ...input });
     if (updated) {

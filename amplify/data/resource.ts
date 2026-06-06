@@ -6,6 +6,7 @@ const schema = a.schema({
       name: a.string().required(),
       job: a.string().required(),
       hobby: a.string().required(),
+      xAccount: a.string(),
       other: a.string(),
     })
     .authorization((allow) => [allow.owner()]),

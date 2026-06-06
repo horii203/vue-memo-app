@@ -30,7 +30,7 @@ const submit = () => {
       <h2 class="text-xl font-bold">プロフィール登録</h2>
       <button
         @click="$emit('close')"
-        class="text-gray-400 hover:text-gray-600 text-2xl leading-none"
+        class="text-blue-300 hover:text-blue-500 text-2xl leading-none"
       >
         &times;
       </button>
@@ -63,7 +63,7 @@ const submit = () => {
 
     <button
       @click="submit"
-      class="w-full bg-gray-200 hover:bg-gray-300 p-2 rounded-lg"
+      class="w-full bg-blue-600 hover:bg-blue-500 text-white p-2 rounded-lg transition"
     >
       追加
     </button>

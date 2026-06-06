@@ -23,14 +23,13 @@ const handleDeleteMemo = async (id: string) => {
 <template>
   <Authenticator>
     <template #default="{ user, signOut }">
-      <div class="min-h-screen bg-gray-100 p-6">
-        <div class="max-w-5xl mx-auto space-y-8">
-          <HeaderBar
-            v-if="!selectedMemo"
-            :user-name="user?.signInDetails?.loginId ?? ''"
-            :sign-out="signOut"
-          />
+      <div class="min-h-screen bg-blue-50">
+        <HeaderBar
+          :user-name="user?.signInDetails?.loginId ?? ''"
+          :sign-out="signOut"
+        />
 
+        <div class="max-w-5xl mx-auto px-6 py-8 space-y-8">
           <!-- 詳細ページ -->
           <MemoDetail
             v-if="selectedMemo"
@@ -57,7 +56,7 @@ const handleDeleteMemo = async (id: string) => {
         <button
           v-if="!selectedMemo"
           @click="showForm = true"
-          class="fixed bottom-6 right-6 w-14 h-14 bg-gray-800 hover:bg-gray-700 text-white rounded-full shadow-lg flex items-center justify-center transition"
+          class="fixed bottom-6 right-6 w-14 h-14 bg-blue-600 hover:bg-blue-500 text-white rounded-full shadow-lg flex items-center justify-center transition"
         >
           <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
             <line x1="12" y1="5" x2="12" y2="19" />

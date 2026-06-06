@@ -49,7 +49,7 @@ const handleCancel = () => {
     <!-- 戻るボタン -->
     <button
       @click="$emit('back')"
-      class="flex items-center gap-1 text-gray-400 hover:text-gray-600 transition"
+      class="flex items-center gap-1 text-blue-400 hover:text-blue-600 transition"
     >
       <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <polyline points="15 18 9 12 15 6" />
@@ -63,22 +63,22 @@ const handleCancel = () => {
 
       <div class="space-y-4">
         <div>
-          <p class="text-xs text-gray-400 mb-1">職業</p>
+          <p class="text-xs text-blue-400 mb-1">職業</p>
           <p class="text-base">{{ memo.job }}</p>
         </div>
         <div>
-          <p class="text-xs text-gray-400 mb-1">趣味</p>
+          <p class="text-xs text-blue-400 mb-1">趣味</p>
           <p class="text-base">{{ memo.hobby }}</p>
         </div>
         <div v-if="memo.other">
-          <p class="text-xs text-gray-400 mb-1">その他</p>
+          <p class="text-xs text-blue-400 mb-1">その他</p>
           <p class="text-base whitespace-pre-wrap">{{ memo.other }}</p>
         </div>
       </div>
 
       <div class="flex gap-2">
         <button
-          class="flex-1 bg-gray-200 hover:bg-gray-300 p-2 rounded-lg transition"
+          class="flex-1 bg-blue-100 hover:bg-blue-200 text-blue-800 p-2 rounded-lg transition"
           @click="isEditing = true"
         >
           編集
@@ -99,13 +99,13 @@ const handleCancel = () => {
       <textarea v-model="editOther" class="border rounded-lg p-2 w-full" placeholder="その他" rows="3" />
       <div class="flex gap-2">
         <button
-          class="flex-1 bg-gray-800 hover:bg-gray-700 text-white p-2 rounded-lg transition"
+          class="flex-1 bg-blue-600 hover:bg-blue-500 text-white p-2 rounded-lg transition"
           @click="handleUpdate"
         >
           保存
         </button>
         <button
-          class="flex-1 bg-gray-200 hover:bg-gray-300 p-2 rounded-lg transition"
+          class="flex-1 bg-blue-100 hover:bg-blue-200 text-blue-800 p-2 rounded-lg transition"
           @click="handleCancel"
         >
           キャンセル

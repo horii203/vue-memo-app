@@ -12,9 +12,12 @@ export function useMemos() {
 
   const fetchMemos = async () => {
     isLoading.value = true;
-    const { data } = await client.models.Memo.list();
-    memos.value = data;
-    isLoading.value = false;
+    try {
+      const { data } = await client.models.Memo.list();
+      memos.value = data;
+    } finally {
+      isLoading.value = false;
+    }
   };
 
   const addMemo = async (input: {

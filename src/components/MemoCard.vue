@@ -8,7 +8,7 @@ defineEmits<{ selectMemo: [id: string] }>();
 
 <template>
   <div
-    class="bg-white p-4 rounded-xl shadow cursor-pointer hover:bg-blue-50 transition flex items-center justify-between"
+    class="bg-white p-4 rounded-xl shadow cursor-pointer [@media(hover:hover)]:hover:bg-blue-50 transition flex items-center justify-between"
     @click="$emit('selectMemo', id)"
   >
     <span class="font-medium">{{ name }}</span>

@@ -4,7 +4,7 @@ import { useJobOptions } from "../composables/useJobOptions";
 
 defineEmits(["close"]);
 
-const { jobOptions, addOption, removeOption } = useJobOptions();
+const { jobOptions, addOption, removeOption, moveOption } = useJobOptions();
 const newOption = ref("");
 
 const handleAdd = async () => {
@@ -43,27 +43,61 @@ const handleAdd = async () => {
 
     <ul class="space-y-2">
       <li
-        v-for="option in jobOptions"
+        v-for="(option, index) in jobOptions"
         :key="option"
         class="flex items-center justify-between px-3 py-2 bg-blue-50 rounded-lg"
       >
         <span class="text-sm">{{ option }}</span>
-        <button
-          @click="removeOption(option)"
-          class="text-gray-400 hover:text-red-500 transition"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="w-4 h-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            stroke-width="2"
+        <div class="flex items-center gap-1">
+          <button
+            @click="moveOption(index, -1)"
+            :disabled="index === 0"
+            class="text-gray-400 hover:text-blue-500 transition disabled:opacity-30 disabled:hover:text-gray-400"
           >
-            <line x1="18" y1="6" x2="6" y2="18" />
-            <line x1="6" y1="6" x2="18" y2="18" />
-          </svg>
-        </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="18 15 12 9 6 15" />
+            </svg>
+          </button>
+          <button
+            @click="moveOption(index, 1)"
+            :disabled="index === jobOptions.length - 1"
+            class="text-gray-400 hover:text-blue-500 transition disabled:opacity-30 disabled:hover:text-gray-400"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </button>
+          <button
+            @click="removeOption(option)"
+            class="text-gray-400 hover:text-red-500 transition"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
       </li>
     </ul>
 

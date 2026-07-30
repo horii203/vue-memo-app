@@ -57,5 +57,14 @@ export function useJobOptions() {
     await persist();
   };
 
-  return { jobOptions, addOption, removeOption };
+  const moveOption = async (index: number, direction: -1 | 1) => {
+    const target = index + direction;
+    if (target < 0 || target >= jobOptions.value.length) return;
+    const options = [...jobOptions.value];
+    [options[index], options[target]] = [options[target], options[index]];
+    jobOptions.value = options;
+    await persist();
+  };
+
+  return { jobOptions, addOption, removeOption, moveOption };
 }

@@ -15,6 +15,9 @@ dist-ssr
 # Amplify
 .amplify/
 
+# Claude Code (個人・端末固有の設定)
+.claude/settings.local.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

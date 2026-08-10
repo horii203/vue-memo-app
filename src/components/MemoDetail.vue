@@ -15,12 +15,14 @@ const emit = defineEmits<{
 const isEditing = ref(false);
 const editName = ref(props.memo.name);
 const editJob = ref(props.memo.job);
+const editHobby = ref(props.memo.hobby ?? "");
 const editXAccount = ref(props.memo.xAccount ?? "");
 const editOther = ref(props.memo.other ?? "");
 
 watch(() => props.memo, (m) => {
   editName.value = m.name;
   editJob.value = m.job;
+  editHobby.value = m.hobby ?? "";
   editXAccount.value = m.xAccount ?? "";
   editOther.value = m.other ?? "";
 });
@@ -31,7 +33,7 @@ const handleUpdate = () => {
     input: {
       name: editName.value,
       job: editJob.value,
-      hobby: "",
+      hobby: editHobby.value,
       xAccount: editXAccount.value,
       other: editOther.value,
     },
@@ -42,6 +44,7 @@ const handleUpdate = () => {
 const handleCancel = () => {
   editName.value = props.memo.name;
   editJob.value = props.memo.job;
+  editHobby.value = props.memo.hobby ?? "";
   editXAccount.value = props.memo.xAccount ?? "";
   editOther.value = props.memo.other ?? "";
   isEditing.value = false;
@@ -67,6 +70,10 @@ const handleCancel = () => {
         <div>
           <p class="text-xs text-blue-400 mb-1">職業</p>
           <p class="text-base">{{ memo.job }}</p>
+        </div>
+        <div v-if="memo.hobby">
+          <p class="text-xs text-blue-400 mb-1">趣味</p>
+          <p class="text-base whitespace-pre-wrap">{{ memo.hobby }}</p>
         </div>
         <div v-if="memo.xAccount">
           <p class="text-xs text-blue-400 mb-1">X アカウント</p>
@@ -121,6 +128,8 @@ const handleCancel = () => {
           </button>
         </div>
       </div>
+
+      <input v-model="editHobby" class="border rounded-lg p-2 w-full" placeholder="趣味" />
 
       <div class="flex items-center border rounded-lg overflow-hidden">
         <span class="px-3 py-2 bg-gray-50 text-gray-400 text-sm border-r select-none">@</span>

@@ -6,6 +6,7 @@ const { jobOptions } = useJobOptions();
 
 const name = ref("");
 const job = ref("");
+const hobby = ref("");
 const xAccount = ref("");
 const other = ref("");
 
@@ -15,13 +16,14 @@ const submit = () => {
   emit("addMemo", {
     name: name.value,
     job: job.value,
-    hobby: "",
+    hobby: hobby.value,
     xAccount: xAccount.value,
     other: other.value,
   });
 
   name.value = "";
   job.value = "";
+  hobby.value = "";
   xAccount.value = "";
   other.value = "";
   emit("close");
@@ -65,6 +67,12 @@ const submit = () => {
         </button>
       </div>
     </div>
+
+    <input
+      v-model="hobby"
+      class="border rounded-lg p-2 w-full"
+      placeholder="趣味"
+    />
 
     <div class="flex items-center border rounded-lg overflow-hidden">
       <span class="px-3 py-2 bg-gray-50 text-gray-400 text-sm border-r select-none">@</span>

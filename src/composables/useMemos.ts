@@ -24,6 +24,7 @@ export function useMemos() {
     name: string;
     job: string;
     hobby: string;
+    xAccount: string;
     other: string;
   }) => {
     const { data: newMemo } = await client.models.Memo.create(input);
@@ -37,7 +38,13 @@ export function useMemos() {
 
   const updateMemo = async (
     id: string,
-    input: { name: string; job: string; hobby: string; xAccount: string; other: string }
+    input: {
+      name: string;
+      job: string;
+      hobby: string;
+      xAccount: string;
+      other: string;
+    },
   ) => {
     const { data: updated } = await client.models.Memo.update({ id, ...input });
     if (updated) {

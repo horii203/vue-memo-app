@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
@@ -9,5 +10,8 @@ export default defineConfig({
   },
   define: {
     global: 'globalThis', // aws-amplify の Node グローバル対応
+  },
+  test: {
+    environment: 'happy-dom', // テスト中にブラウザの DOM を再現する
   },
 })
